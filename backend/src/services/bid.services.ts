@@ -42,3 +42,46 @@ export const bidCreate = async (data: {
     throw err;
   }
 };
+
+
+export const getMyBids=async (
+    freelancerId:string,
+    query:{
+        page?:number;
+        limit?:number;
+        status?:string;
+    }
+
+)=>{
+    const page=Math.max(Number(query.page)||1,1);
+    const limit=Math.max(Number(query.limit)||10,50);
+    const skip=(page-1)*limit;
+
+    const filter:any={
+        freelancerId
+    };
+
+    if(query.status){
+        filter.status=query.status;
+    }
+
+    const [bids,total]=await Promise.all(
+        [
+            Bid.find(filter)
+            .populate("gigid","title budget status ownerId")
+            .sort({createdAt:-1})
+            .skip(skip)
+            .limit(limit),
+            Bid.countDocuments(filter)
+        ]
+    );
+
+    return {
+        bids,
+        pagination:{
+            total,
+            page,
+            pages:Math.ceil(total/limit)
+        }
+    }
+}
