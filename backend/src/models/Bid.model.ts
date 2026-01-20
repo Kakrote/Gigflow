@@ -1,7 +1,7 @@
 import { Schema,Document,model, Types } from "mongoose";
 
 
-enum StatusTypes{
+export enum StatusTypes{
     PENDING="pending",
     HIRED="hired",
     REJECTED="rejected"
