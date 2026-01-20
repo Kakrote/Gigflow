@@ -54,7 +54,7 @@ export const getMyBids=async (
 
 )=>{
     const page=Math.max(Number(query.page)||1,1);
-    const limit=Math.max(Number(query.limit)||10,50);
+    const limit=Math.min(Number(query.limit)||10,50);
     const skip=(page-1)*limit;
 
     const filter:any={
@@ -68,7 +68,8 @@ export const getMyBids=async (
     const [bids,total]=await Promise.all(
         [
             Bid.find(filter)
-            .populate("gigid","title budget status ownerId")
+            .select("price message status createdAt gigid")
+            .populate("gigid","title budget status ")
             .sort({createdAt:-1})
             .skip(skip)
             .limit(limit),
