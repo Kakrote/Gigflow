@@ -1,6 +1,6 @@
 import { Schema,model,Document, Types } from "mongoose";
 
-enum StatusTypes{
+export enum StatusTypes{
     OPEN="open",
     ASSIGNED="assigned"
 }
