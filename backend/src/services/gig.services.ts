@@ -80,7 +80,7 @@ export const getMyGigsService = async (
   query: {
     page?: number;
     limit?: number;
-    status?: StatusTypes;
+    status?: string;
   }
 ) => {
   const page = Math.max(Number(query.page) || 1, 1);
