@@ -82,11 +82,18 @@ export const getMyGigs=catchAsync(
 );
 
 // @desc Get gigs created by logged-in user
-// @route GET/api/gigs/my 
+// @route GET/api/bid/:gigId 
 // @access Private
 
 export const getMyGigBid=catchAsync(
     async(req:Request,res:Response)=>{
-        
+        const result =await bidForMygig(
+            req.params.gigId as string,
+            req.user?.id as string
+        );
+        res.status(200).json({
+            success:true,
+            data:result
+        });
     }
-)
+);
