@@ -2,6 +2,7 @@ import { Request,Response } from "express";
 import * as bidServices from "../services/bid.services";
 import { catchAsync } from "../utils/catchAsync";
 import { Bid } from "../models/Bid.model";
+import { hireService } from "../services/hireBid.services";
 
 
 // @desc Create a new bid
@@ -50,4 +51,19 @@ export const getMyBid=catchAsync(
     }
 )
 
+// @desc hiring a bid 
+// @route POST/api/:bidId/hire
+// @access Private
 
+export const hireBid=catchAsync(
+    async(req:Request,res:Response)=>{
+        const result = await hireService(
+            req.body.bidId,
+            req.user?.id as string
+        );
+        res.status(200).json({
+            success:true,
+            message:"The Freelancer hired Successfully"
+        })
+    }
+)
