@@ -81,7 +81,7 @@ export const getMyGigs=catchAsync(
     }
 );
 
-// @desc Get gigs created by logged-in user
+// @desc Get bids for a specific gig (owner only)
 // @route GET/api/bid/:gigId 
 // @access Private
 
